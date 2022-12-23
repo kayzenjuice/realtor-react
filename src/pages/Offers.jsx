@@ -1,7 +1,11 @@
-import React from "react";
+import ProductGallery from "../components/ProductGallery";
 
 const Offers = () => {
-  return <div>Offers</div>;
+  return (
+    <div className="py-5">
+      <ProductGallery />
+    </div>
+  );
 };
 
 export default Offers;
