@@ -1,18 +1,31 @@
 import { React, useState } from "react";
 
 const ProductCard = ({ product }) => {
+  // id: 3,
+  // name: "Product 3",
+  // imageUrl: "https://via.placeholder.com/150",
+  // description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+  // category: "furniture",
   return (
-    <div className="max-w-sm rounded overflow-hidden shadow-lg m-4">
-      <img src={product.imageUrl} alt={product.name} className="w-full" />
-      <div className="px-6 py-4">
-        <div className="font-bold text-xl mb-2">{product.name}</div>
-        <p className="text-gray-700 text-base">{product.description}</p>
+    <div className="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 px-3 mb-24">
+      <div className="xl:flex xl:items-center p-10 xl:py-32 mb-8 bg-white rounded-3xl">
+        <a className="block mx-auto max-w-max" href="#">
+          <img
+            className="h-40 object-cover"
+            src="uinel-assets/images/ecommerce-product-list/macbook-pro-17.png"
+            alt=""
+          />
+        </a>
       </div>
-      <div className="px-6 py-4">
-        <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
-          {product.category}
-        </span>
-      </div>
+      <a href="#">
+        <p className="mb-4 text-xl leading-8 font-heading font-medium hover:underline">
+          {product.name}
+        </p>
+      </a>
+      <p className="text-xl text-blue-500 font-heading font-medium tracking-tighter">
+        <span className="text-base pr-2">$</span>
+        <span>2090.59</span>
+      </p>
     </div>
   );
 };
@@ -38,19 +51,14 @@ const ProductList = ({ products, filter }) => {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    <div className="relative">
-      <div className="flex flex-wrap justify-center">
-        {currentProducts.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
+    <div className="pt-12 pb-24 2xl:pb-44 bg-blueGray-100">
+      <div className="container px-4 mx-auto">
+        <div className="flex flex-wrap -mx-3 mb-20 md:mb-40">
+          {currentProducts.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
       </div>
-      <Pagination
-        className="bottom-0 z-10 flex justify-center"
-        productsPerPage={productsPerPage}
-        totalProducts={filteredProducts.length}
-        paginate={paginate}
-        currentPage={currentPage}
-      />
     </div>
   );
 };
@@ -145,10 +153,23 @@ const ProductGallery = () => {
     },
   ];
   return (
-    <div className="container mx-auto px-4">
-      <ProductFilter setFilter={setFilter} />
+    <section>
+      <div class="pb-9 text-center border-b border-black border-opacity-5">
+        <div class="relative">
+          <h2
+            class="mb-5 md:mb-0 text-9xl xl:text-10xl leading-normal font-heading font-medium text-center"
+            contenteditable="false"
+          >
+            New in
+          </h2>
+          <span class="md:absolute md:right-0 md:bottom-3 text-sm text-gray-400 font-medium">
+            449 products found
+          </span>
+        </div>
+      </div>
+      <ProductFilter setFilter={filter} />
       <ProductList products={products} filter={filter} />
-    </div>
+    </section>
   );
 };
 
@@ -157,7 +178,7 @@ const ProductFilter = ({ setFilter }) => {
     <div className="flex justify-center mb-4">
       <select
         onChange={(e) => setFilter(e.target.value)}
-        className="block appearance-none w-1/4 bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline-blue"
+        className="flex items-center py-5 px-8 xl:px-12 font-heading font-medium border border-gray-200 hover:border-gray-300 rounded-4xl"
       >
         <option value="">All Categories</option>
         <option value="electronics">Electronics</option>
