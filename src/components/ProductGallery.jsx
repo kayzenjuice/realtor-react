@@ -154,15 +154,15 @@ const ProductGallery = () => {
   ];
   return (
     <section>
-      <div class="pb-9 text-center border-b border-black border-opacity-5">
-        <div class="relative">
+      <div className="pb-9 text-center border-b border-black border-opacity-5">
+        <div className="relative">
           <h2
-            class="mb-5 md:mb-0 text-9xl xl:text-10xl leading-normal font-heading font-medium text-center"
-            contenteditable="false"
+            className="mb-5 md:mb-0 text-9xl xl:text-10xl leading-normal font-heading font-medium text-center"
+            contentEditable="false"
           >
             New in
           </h2>
-          <span class="md:absolute md:right-0 md:bottom-3 text-sm text-gray-400 font-medium">
+          <span className="md:absolute md:right-0 md:bottom-3 text-sm text-gray-400 font-medium">
             449 products found
           </span>
         </div>

@@ -49,7 +49,7 @@ const Header = () => {
           <ul className="hidden xl:flex px-4 ml-32">
             <li className="mr-16">
               <a
-                class={`text-gray-400 hover:text-gray-500 ${
+                className={`text-gray-400 hover:text-gray-500 ${
                   pathMatchRoute("/") && "text-black border-b-red-500"
                 }`}
                 onClick={() => navigate("/")}
@@ -59,7 +59,7 @@ const Header = () => {
             </li>
             <li className="mr-16">
               <a
-                class={`text-gray-400 hover:text-gray-500 ${
+                className={`text-gray-400 hover:text-gray-500 ${
                   pathMatchRoute("/offers") && "text-black border-t-red-500"
                 }`}
                 onClick={() => navigate("/offers")}
@@ -69,7 +69,7 @@ const Header = () => {
             </li>
           </ul>
           <div className="hidden xl:flex items-center ml-auto">
-            <a class="text-gray-400 hover:text-gray-500" href="#">
+            <a className="text-gray-400 hover:text-gray-500" href="#">
               <svg
                 width="20"
                 height="23"
@@ -80,28 +80,31 @@ const Header = () => {
                 <path
                   d="M17.5219 18.016H2.70312V8.5933C2.70313 6.719 3.48375 4.92147 4.87328 3.59614C6.2628 2.27081 8.1474 1.52625 10.1125 1.52625C12.0776 1.52625 13.9622 2.27081 15.3517 3.59614C16.7412 4.92147 17.5219 6.719 17.5219 8.5933V18.016Z"
                   stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 ></path>
                 <path
                   d="M1 18.0121H19"
                   stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 ></path>
                 <path
                   d="M8.87891 22H10.8789"
                   stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 ></path>
               </svg>
             </a>
             <div className="w-px h-8 bg-gray-200 bg-opacity-50 ml-9 mr-11"></div>
-            <a className="flex items-center mr-12" href="#">
+            <a
+              className="flex items-center mr-12"
+              onClick={() => navigate("/profile")}
+            >
               {loggedIn ? (
                 <span>{auth.currentUser.displayName}</span>
               ) : (
@@ -171,7 +174,7 @@ const Header = () => {
                 alt=""
               />
             </a>
-            <a class="text-gray-400 hover:text-gray-500 ml-auto" href="#">
+            <a className="text-gray-400 hover:text-gray-500 ml-auto" href="#">
               <svg
                 width="20"
                 height="23"
@@ -182,32 +185,32 @@ const Header = () => {
                 <path
                   d="M17.5219 18.016H2.70312V8.5933C2.70313 6.719 3.48375 4.92147 4.87328 3.59614C6.2628 2.27081 8.1474 1.52625 10.1125 1.52625C12.0776 1.52625 13.9622 2.27081 15.3517 3.59614C16.7412 4.92147 17.5219 6.719 17.5219 8.5933V18.016Z"
                   stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 ></path>
                 <path
                   d="M1 18.0121H19"
                   stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 ></path>
                 <path
                   d="M8.87891 22H10.8789"
                   stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 ></path>
               </svg>
             </a>
           </div>
           <div>
             <ul>
-              <li class="mb-1 px-10">
+              <li className="mb-1 px-10">
                 <a
-                  class="block pl-8 py-4 text-body text-lg rounded-full hover:shadow-2xl"
+                  className="block pl-8 py-4 text-body text-lg rounded-full hover:shadow-2xl"
                   onClick={() => {
                     navigate("/");
                     showSidePanel();
@@ -216,9 +219,9 @@ const Header = () => {
                   Home
                 </a>
               </li>
-              <li class="mb-1 px-10">
+              <li className="mb-1 px-10">
                 <a
-                  class="block pl-8 py-4 text-body text-lg rounded-full hover:shadow-2xl"
+                  className="block pl-8 py-4 text-body text-lg rounded-full hover:shadow-2xl"
                   onClick={() => {
                     navigate("/offers");
                     showSidePanel();
@@ -229,18 +232,18 @@ const Header = () => {
               </li>
             </ul>
           </div>
-          <div class="mt-auto px-10">
+          <div className="mt-auto px-10">
             <button
               onClick={() => {
                 navigate("/profile");
                 showSidePanel();
               }}
-              class="py-3 px-5 mt-6 w-full font-body font-bold uppercase tracking-wide text-sm border-2 border-gray-200 hover:border-gray-300 border-opacity-50 rounded-full"
+              className="py-3 px-5 mt-6 w-full font-body font-bold uppercase tracking-wide text-sm border-2 border-gray-200 hover:border-gray-300 border-opacity-50 rounded-full"
             >
-              <span class="block mt-px">{pageState}</span>
+              <span className="block mt-px">{pageState}</span>
             </button>
-            <p class="mt-6 mb-4 text-center">
-              <span class="text-sm text-darkBlueGray-400">
+            <p className="mt-6 mb-4 text-center">
+              <span className="text-sm text-darkBlueGray-400">
                 2021 © Uinel. All rights reserved.
               </span>
             </p>
@@ -248,11 +251,11 @@ const Header = () => {
         </nav>
         <button
           onClick={showSidePanel}
-          class="navbar-close absolute top-5 p-6 right-5"
+          className="navbar-close absolute top-5 p-6 right-5"
         >
-          <div class="absolute top-3">
-            <span class="absolute w-px h-6 bg-black transform -rotate-45"></span>
-            <span class="absolute w-px h-6 bg-black transform rotate-45"></span>
+          <div className="absolute top-3">
+            <span className="absolute w-px h-6 bg-black transform -rotate-45"></span>
+            <span className="absolute w-px h-6 bg-black transform rotate-45"></span>
           </div>
         </button>
       </div>
