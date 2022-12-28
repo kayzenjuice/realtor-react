@@ -15,27 +15,36 @@ import ListingItem from "../components/ListingItem";
 import { useParams } from "react-router";
 
 const Category = () => {
+  // initialize listing variables
   const [listings, setListings] = useState(null);
   const [loading, setLoading] = useState(true);
   const [lastFetchedListing, setLastFetchedListing] = useState(null);
+  // grab url paramaters
   const params = useParams();
 
   useEffect(() => {
+    // async for to return a promise
     async function fetchListings() {
       try {
+        // grab all the data in the listings collections
         const listingRef = collection(db, "listings");
+        // set a query to only grab listings with the type {categoryName}
+        // also set a limit of how many will be called
         const q = query(
           listingRef,
           where("type", "==", params.categoryName),
           orderBy("timestamp", "desc"),
           limit(2)
         );
-
+        // get docs using a query
         const querySnap = await getDocs(q);
+        // remember the last visible listing
         const lastVisible = querySnap.docs[querySnap.docs.length - 1];
+        // create an empty array
         const listings = [];
+        // now set state to rememember last visible listing
         setLastFetchedListing(lastVisible);
-
+        // for each doc in querySnap push it to th new listing variable
         querySnap.forEach((doc) => {
           return listings.push({
             id: doc.id,
@@ -55,6 +64,7 @@ const Category = () => {
 
   async function onFetchMorelisting() {
     try {
+      // now that we have saved the last fetched listing we can start after that new variable
       const listingRef = collection(db, "listings");
       const q = query(
         listingRef,
@@ -63,6 +73,8 @@ const Category = () => {
         startAfter(lastFetchedListing),
         limit(1)
       );
+
+      // set it again using querysnap.length - 1
 
       const querySnap = await getDocs(q);
       const lastVisible = querySnap.docs[querySnap.docs.length - 1];
@@ -75,6 +87,7 @@ const Category = () => {
           data: doc.data(),
         });
       });
+      // now set all listings to the new current listing state
       setListings((prevState) => [...prevState, ...listings]);
       setLoading(false);
     } catch (error) {
