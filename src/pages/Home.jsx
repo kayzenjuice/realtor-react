@@ -110,7 +110,9 @@ const Home = () => {
       <div className="max-w-6xl mx-auto pt-4 space-y-6">
         {offerListings && offerListings.length > 0 && (
           <div className="m-2 mb-6">
-            <h2 className="px-3 text-2xl mt-6 font-semibold">Recent offers</h2>
+            <h2 className="px-3 text-2xl mt-6 font-semibold">
+              Recent offers listed
+            </h2>
             <Link to="/offers">
               <p className="text-blue-600 hover:text-blue-800 px-3 text-sm transition duration-150 ease-in-out">
                 Show more offers
