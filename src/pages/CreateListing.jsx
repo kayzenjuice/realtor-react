@@ -15,10 +15,12 @@ import { db } from "../firebase";
 import { useNavigate } from "react-router-dom";
 
 const CreateListing = () => {
+  // Initializing react hooks
   const navigate = useNavigate();
   const auth = getAuth();
   const [geolocationEnabled, setGeolocationEnabled] = useState(true);
   const [loading, setLoading] = useState(false);
+  // Form data
   const [formData, setFormData] = useState({
     type: "rent",
     name: "",
@@ -35,7 +37,7 @@ const CreateListing = () => {
     longitude: 0,
     images: {},
   });
-
+  // Deconstruction form data
   const {
     type,
     name,
@@ -54,6 +56,7 @@ const CreateListing = () => {
   } = formData;
 
   function onChange(e) {
+    // Form logic
     let boolean = null;
     if (e.target.value === "true") {
       boolean = true;
@@ -79,6 +82,7 @@ const CreateListing = () => {
 
   async function onSubmit(e) {
     e.preventDefault();
+    // Loading and also form validation logic
     setLoading(true);
     if (+discountedPrice >= +regularPrice) {
       setLoading(false);
@@ -90,21 +94,22 @@ const CreateListing = () => {
       toast.error("maximum 6 images are allowed");
       return;
     }
-
+    // Google cloud geo cloud api fetch using API key
     let geolocation = {};
     let location;
     if (geolocationEnabled) {
       const response = await fetch(
         `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${process.env.REACT_APP_GEOCODE_API_KEY}`
       );
-
+      // Waits for response and converts it to json
+      // if lat or lng exists store, otherwise default it to 0
       const data = await response.json();
       console.log(data);
       geolocation.lat = data.results[0]?.geometry.location.lat ?? 0;
       geolocation.lng = data.results[0]?.geometry.location.lng ?? 0;
 
       location = data.status === "ZERO_RESULTS" && undefined;
-
+      // Address error checking
       if (location === undefined) {
         setLoading(false);
         toast.error("please enter a correct address");
@@ -117,6 +122,7 @@ const CreateListing = () => {
 
     async function storeImage(image) {
       return new Promise((resolve, reject) => {
+        // Init storage and create file name
         const storage = getStorage();
         const filename = `${auth.currentUser.uid}-${image.name}-${uuidv4()}`;
         const storageRef = ref(storage, filename);
@@ -146,6 +152,7 @@ const CreateListing = () => {
             // Handle successful uploads on complete
             // For instance, get the download URL: https://firebasestorage.googleapis.com/...
             getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+              // Adding a identifier for the url & file name so it can be accessed later
               resolve(`${downloadURL}@${filename}`);
             });
           }
@@ -154,6 +161,7 @@ const CreateListing = () => {
     }
 
     const imgUrls = await Promise.all(
+      // loop through all form images and start uploading it to firebase storage, using storeImage
       [...images].map((image) =>
         storeImage(image).catch((error) => {
           setLoading(false);
@@ -162,7 +170,7 @@ const CreateListing = () => {
         })
       )
     );
-
+    // Store original form data into a new form data copy pre-upload to database
     const formDataCopy = {
       ...formData,
       imgUrls,
@@ -172,10 +180,13 @@ const CreateListing = () => {
       userDisplayName: auth.currentUser.displayName,
     };
 
+    // delete images, as this does not need to be uploaded to firebase
     delete formDataCopy.images;
+    // delete unwanted discounted price if not needed
     !formDataCopy.offer && delete formDataCopy.discountedPrice;
     delete formDataCopy.latitude;
     delete formDataCopy.longitude;
+    // add to database
     const docRef = await addDoc(collection(db, "listings"), formDataCopy);
     setLoading(false);
     toast.success("Listing created");

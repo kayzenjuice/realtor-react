@@ -22,11 +22,13 @@ import { db } from "../firebase";
 import { useNavigate, useParams } from "react-router-dom";
 
 const EditListing = () => {
+  // Init all variables
   const navigate = useNavigate();
   const auth = getAuth();
   const [geolocationEnabled, setGeolocationEnabled] = useState(true);
   const [loading, setLoading] = useState(false);
   const [listing, setListing] = useState(false);
+  // Set form data
   const [formData, setFormData] = useState({
     type: "rent",
     name: "",
@@ -43,7 +45,7 @@ const EditListing = () => {
     longitude: 0,
     images: {},
   });
-
+  // Deconstruct form data
   const {
     type,
     name,
@@ -61,14 +63,16 @@ const EditListing = () => {
     images,
   } = formData;
 
+  // useparams , to get ID from url
   const params = useParams();
 
   useEffect(() => {
     setLoading(true);
+    // Fetch all listings, using ID from URL
     async function fetchListing() {
       const docRef = doc(db, "listings", params.listingId);
       const docSnap = await getDoc(docRef);
-
+      // if exists add to state variable and add to form data
       if (docSnap.exists()) {
         setListing(docSnap.data());
         setFormData({ ...docSnap.data() });
@@ -82,6 +86,7 @@ const EditListing = () => {
   }, [navigate, params.listingId]);
 
   useEffect(() => {
+    // If user is not the user who uploaded the listing, reject access
     if (listing && listing.userRef !== auth.currentUser.uid) {
       toast.error("You cannot edit this listing");
       navigate("/");
@@ -89,6 +94,7 @@ const EditListing = () => {
   });
 
   function onChange(e) {
+    // Form logic
     let boolean = null;
     if (e.target.value === "true") {
       boolean = true;
