@@ -2,11 +2,8 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import useAuthStatus from "../hooks/useAuthStatus";
-import Spinner from "./Spinner";
 
 const Header = () => {
-  const { loggedIn, checkingStatus } = useAuthStatus();
   const [showHamburger, setShowHamburger] = useState(false);
 
   const [pageState, setPageState] = useState("Sign In");
@@ -105,7 +102,7 @@ const Header = () => {
               className="flex items-center mr-12"
               onClick={() => navigate("/profile")}
             >
-              {loggedIn ? (
+              {pageState === "Profile" ? (
                 <span>{auth.currentUser.displayName}</span>
               ) : (
                 <span>Guest</span>
