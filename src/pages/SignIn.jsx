@@ -38,6 +38,7 @@ const SignIn = () => {
       }
     } catch (error) {
       toast.error("Bas user credentials!");
+      console.log(error);
     }
   }
 
